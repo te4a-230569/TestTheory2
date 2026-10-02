@@ -77,7 +77,7 @@ public class UserManagerTest {
   }
 
   @Test
-  public void 異常系_不可能() {
+  void 異常系_不可能() {
     User user1 = new User("佐藤田中");
     User user2 = new User("佐藤田中");
     userManager.setUserToList(user1);
@@ -89,14 +89,14 @@ public class UserManagerTest {
     assertThat(userManager.getUserMap()).isEmpty();
   }
 
-  public void 正常系_MapList初期生成() {
+  void 正常系_MapList初期生成() {
     UserManager.getInstance();
     assertThat(userManager.getUserList()).isNotEmpty();
     assertThat(userManager.getUserMap()).isNotEmpty();
   }
 
   
-  public void 正常系_List登録順序保持() {
+  void 正常系_List登録順序保持() {
     User user1 = new User("佐藤田中");
     User user2 = new User("伊達仙台");
     User user3 = new User("鈴木田中");
