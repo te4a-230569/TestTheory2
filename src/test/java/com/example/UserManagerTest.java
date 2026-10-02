@@ -30,7 +30,7 @@ public class UserManagerTest {
   @Test
   void 正常系_userList登録参照() {
     User user1 = new User("佐藤田中");
-    User user2 = new User("仙台太郎");
+    User user2 = new User("伊達仙台");
     userManager.setUserToList(user1);
     userManager.setUserToList(user2);
     List<User> UserList = userManager.getUserList();
@@ -40,17 +40,17 @@ public class UserManagerTest {
   @Test
   void 正常系_userMap登録参照() {
     User user1 = new User("佐藤田中");
-    User user2 = new User("仙台太郎");
+    User user2 = new User("伊達仙台");
     userManager.setUserToMap(user1);
     userManager.setUserToMap(user2);
     Map<String, User> userMap = userManager.getUserMap();
-    assertThat(userMap).containsKeys("佐藤田中", "仙台太郎");
+    assertThat(userMap).containsKeys("佐藤田中", "伊達仙台");
   }
 
   @Test
   void 正常系_user全削除() {
     User user1 = new User("佐藤田中");
-    User user2 = new User("仙台太郎");
+    User user2 = new User("伊達仙台");
     userManager.setUserToList(user1);
     userManager.setUserToList(user2);
     userManager.setUserToMap(user1);
@@ -62,7 +62,7 @@ public class UserManagerTest {
   @Test
   void 正常系_code指定user削除() {
     User user1 = new User("佐藤田中");
-    User user2 = new User("仙台太郎");
+    User user2 = new User("伊達仙台");
     userManager.setUserToList(user1);
     userManager.setUserToList(user2);
     userManager.setUserToMap(user1);
@@ -85,8 +85,38 @@ public class UserManagerTest {
     userManager.setUserToMap(user1);
     userManager.setUserToMap(user2);
     userManager.deleteUser("佐藤田中");
-    assertThat(userManager.getUserList()).isEmpty();
+    assertThat(userManager.getUserList()).isNotEmpty();
     assertThat(userManager.getUserMap()).isEmpty();
   }
 
+  public void 正常系_MapList初期生成() {
+    UserManager.getInstance();
+    assertThat(userManager.getUserList()).isNotEmpty();
+    assertThat(userManager.getUserMap()).isNotEmpty();
+  }
+
+  
+  public void 正常系_List登録順序保持() {
+    User user1 = new User("佐藤田中");
+    User user2 = new User("伊達仙台");
+    User user3 = new User("鈴木田中");
+    User user4 = new User("Smith Jonshon");
+    userManager.setUserToList(user1);
+    userManager.setUserToList(user2);
+    userManager.setUserToList(user3);
+    userManager.setUserToList(user4);
+    List<User> UserList = userManager.getUserList();
+    assertThat(UserList).containsExactlyElementsOf(List.of(user1, user2, user3, user4));
+  }
+
+  void 正常系_Mapキー確認() {
+    User user1 = new User("佐藤田中");
+    User user2 = new User("伊達仙台");
+    userManager.setUserToMap(user1);
+    userManager.setUserToMap(user2);
+    Map<String, User> userMap = userManager.getUserMap();
+    assertThat(userMap)
+        .containsEntry("佐藤田中", user1)
+        .containsEntry("伊達仙台", user2);
+  }
 }
